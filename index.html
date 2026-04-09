@@ -53,7 +53,7 @@
  			</div>
  		</div>
  	</div>
- 	
+
 	<script>
 		// ── STATE ──────────────────────────────────────────────
 		let notes = []; // each entry: { id, title, content }
@@ -68,8 +68,13 @@
 		const noteCounterSpan = document.getElementById("noteCounter");
 		const windowSizeSpan = document.getElementById("windowSize");
 		const userAgentSpan = document.getElementById("userAgent");
-	</script>
 
+		function updateCounter() {
+ 			const count = notes.length;
+ 			noteCounterSpan.textContent =
+ 				count === 1 ? "1 note" : `${count} notes`;
+		}
+	</script>
 </body>
 </html>
 <style>
