@@ -120,8 +120,15 @@
  			deleteBtn.classList.add("delete-note");
  			deleteBtn.setAttribute("data-action", "delete");
  			deleteBtn.setAttribute("data-id", note.id);
+
+ 			//edit button
+ 			const editBtn = document.createElement("button"); 
+			editBtn.textContent = "✏ Edit"; 
+			editBtn.setAttribute("data-action", "edit"); 
+			editBtn.setAttribute("data-id", note.id); 
  
  			titleDiv.appendChild(titleSpan);
+ 			titleDiv.appendChild(editBtn);   
  			titleDiv.appendChild(deleteBtn);
  	
  			// content paragraph
@@ -192,8 +199,25 @@
     			const id = parseInt(btn.getAttribute("data-id"), 10); 
     			deleteNoteById(id); 
   			} 
+
+  			const editTarget = e.target.closest('[data-action="edit"]');
+		if (editTarget) {
+  			const id = parseInt(editTarget.getAttribute("data-id"), 10);
+  			const found = notes.find(n => n.id === id);
+
+  			if (found) {
+    			const newTitle = prompt("New title:", found.title);
+
+    			if (newTitle !== null && newTitle.trim() !== "") {
+      				found.title = newTitle.trim();
+      				renderNotes();
+    			}
+  			}
+		}
+
 		});
 
+		
 		function updateWindowSize() { 
   			const w = window.innerWidth; 
   			const h = window.innerHeight; 
@@ -235,6 +259,12 @@
 		} 
  
 		init();   // ← call init when the page loads
+
+		titleInput.addEventListener("keydown", (e) => { 
+  			if (e.key === "Enter") { 
+    			addNote(); 
+  			} 
+		}); 
 	</script>
 </body>
 </html>
